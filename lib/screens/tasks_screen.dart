@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todoey/screens/add_task_screen.dart';
-import 'package:flutter_todoey/widgets/task_tile.dart';
+import 'package:flutter_todoey/widgets/tasks_list.dart';
 
 class TasksScreen extends StatelessWidget {
   @override
@@ -54,13 +54,7 @@ class TasksScreen extends StatelessWidget {
                 color: Colors.white,
                 borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
               ),
-              child: ListView(
-                children: [
-                  TaskTile(title: "Task 1"),
-                  TaskTile(title: "Task 2"),
-                  TaskTile(title: "Task 3"),
-                ],
-              ),
+              child: TasksList(),
             ),
           ),
         ],
