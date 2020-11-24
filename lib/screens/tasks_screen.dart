@@ -1,8 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todoey/models/task.dart';
 import 'package:flutter_todoey/screens/add_task_screen.dart';
 import 'package:flutter_todoey/widgets/tasks_list.dart';
 
-class TasksScreen extends StatelessWidget {
+class TasksScreen extends StatefulWidget {
+  @override
+  _TasksScreenState createState() => _TasksScreenState();
+}
+
+class _TasksScreenState extends State<TasksScreen> {
+  List<Task> tasks = [
+    Task(name: "Buy milk"),
+    Task(name: "Buy eggs"),
+    Task(name: "Buy bread"),
+  ];
+  num numberOfTasksLeft;
+
+  @override
+  void initState() {
+    super.initState();
+
+    numberOfTasksLeft = tasks.length;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,7 +36,12 @@ class TasksScreen extends StatelessWidget {
           builder: (context) => SingleChildScrollView(
             child: Container(
               padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-              child: AddTaskScreen(),
+              child: AddTaskScreen(
+                onTaskAdded: (title) => setState(() {
+                  tasks.add(Task(name: title));
+                  numberOfTasksLeft++;
+                }),
+              ),
             ),
           ),
         ),
@@ -40,7 +65,7 @@ class TasksScreen extends StatelessWidget {
                   style: TextStyle(color: Colors.white, fontSize: 40.0, fontWeight: FontWeight.w700),
                 ),
                 Text(
-                  "12 Tasks left",
+                  "$numberOfTasksLeft tasks left",
                   style: TextStyle(color: Colors.white, fontSize: 18.0),
                 ),
                 SizedBox(height: 20.0),
@@ -54,7 +79,15 @@ class TasksScreen extends StatelessWidget {
                 color: Colors.white,
                 borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
               ),
-              child: TasksList(),
+              child: TasksList(
+                items: tasks,
+                onChecked: (index, value) {
+                  setState(() {
+                    tasks[index].toggleDone();
+                    numberOfTasksLeft -= value ? 1 : -1;
+                  });
+                },
+              ),
             ),
           ),
         ],
