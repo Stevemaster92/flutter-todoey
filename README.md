@@ -5,5 +5,8 @@ course *The Complete 2020 Flutter Development Bootcamp with Dart* taught by Ange
 
 ## What you can do
 
-This todolist app allows users to keep track of their tasks.
-The objective is to understand how to manage the app state in Flutter using the officially recommended Provider package.
+This app provides a simple TODO list allowing users to keep track of their tasks.
+The objective is to understand different ways on how to manage the app state in Flutter.
+Finally, the app makes use of the officially recommended Provider package.
+
+<img src="https://github.com/Stevemaster92/flutter-todoey/blob/master/images/todoey.png" alt="todoey" height="734"/>
