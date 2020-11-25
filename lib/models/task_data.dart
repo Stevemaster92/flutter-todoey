@@ -17,13 +17,18 @@ class TaskData extends ChangeNotifier {
 
   int get tasksLeft => _tasks.where((element) => !element.isDone).length;
 
-  void addTask(String title) {
+  void add(String title) {
     _tasks.add(Task(name: title));
     notifyListeners();
   }
 
-  void toggleTask(int index) {
-    _tasks[index].toggleDone();
+  void delete(Task task) {
+    _tasks.remove(task);
+    notifyListeners();
+  }
+
+  void toggle(Task task) {
+    task.toggleDone();
     notifyListeners();
   }
 }
