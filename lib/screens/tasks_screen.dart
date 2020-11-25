@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todoey/models/task.dart';
+import 'package:flutter_todoey/models/task_data.dart';
 import 'package:flutter_todoey/screens/add_task_screen.dart';
 import 'package:flutter_todoey/widgets/tasks_list.dart';
+import 'package:provider/provider.dart';
 
 class TasksScreen extends StatefulWidget {
   @override
@@ -9,20 +10,6 @@ class TasksScreen extends StatefulWidget {
 }
 
 class _TasksScreenState extends State<TasksScreen> {
-  List<Task> tasks = [
-    Task(name: "Buy milk"),
-    Task(name: "Buy eggs"),
-    Task(name: "Buy bread"),
-  ];
-  num numberOfTasksLeft;
-
-  @override
-  void initState() {
-    super.initState();
-
-    numberOfTasksLeft = tasks.length;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,12 +23,7 @@ class _TasksScreenState extends State<TasksScreen> {
           builder: (context) => SingleChildScrollView(
             child: Container(
               padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-              child: AddTaskScreen(
-                onTaskAdded: (title) => setState(() {
-                  tasks.add(Task(name: title));
-                  numberOfTasksLeft++;
-                }),
-              ),
+              child: AddTaskScreen(),
             ),
           ),
         ),
@@ -65,7 +47,7 @@ class _TasksScreenState extends State<TasksScreen> {
                   style: TextStyle(color: Colors.white, fontSize: 40.0, fontWeight: FontWeight.w700),
                 ),
                 Text(
-                  "$numberOfTasksLeft tasks left",
+                  "${Provider.of<TaskData>(context).tasksLeft} tasks left",
                   style: TextStyle(color: Colors.white, fontSize: 18.0),
                 ),
                 SizedBox(height: 20.0),
@@ -79,15 +61,7 @@ class _TasksScreenState extends State<TasksScreen> {
                 color: Colors.white,
                 borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
               ),
-              child: TasksList(
-                items: tasks,
-                onChecked: (index, value) {
-                  setState(() {
-                    tasks[index].toggleDone();
-                    numberOfTasksLeft -= value ? 1 : -1;
-                  });
-                },
-              ),
+              child: TasksList(),
             ),
           ),
         ],
